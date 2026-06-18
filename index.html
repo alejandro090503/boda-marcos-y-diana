@@ -759,22 +759,24 @@ section{padding:64px 22px}
   overflow:visible;
 }
 .tl-svg-bg{
-  stroke:rgba(74,99,62,.18);
-  stroke-width:1;fill:none;
-  stroke-dasharray:2 5;
+  stroke:rgba(74,99,62,.22);
+  stroke-width:1.2;fill:none;
+  stroke-dasharray:3 7;
+  animation:tlBgFlow 9s linear infinite;
 }
 .tl-svg-path{
   stroke:url(#tlGrad);
-  stroke-width:2.4;
+  stroke-width:2.6;
   stroke-linecap:round;
   fill:none;
   filter:url(#tlGlow);
-  stroke-dasharray:6 9;
-  animation:tlFlow 5s linear infinite;
+  /* OJO: NO usar stroke-dasharray/animation aquí — el JS de scroll controla
+     dashoffset para dibujar el camino. Cualquier CSS sobre estas props pelea
+     con el scroll y la línea se queda trabada en móvil. */
 }
-@keyframes tlFlow{
+@keyframes tlBgFlow{
   from{stroke-dashoffset:0}
-  to  {stroke-dashoffset:-90}
+  to  {stroke-dashoffset:-100}
 }
 
 /* Fila con zig-zag: lado izq y der — texto nunca cruza la línea central */
