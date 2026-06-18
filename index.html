@@ -741,7 +741,14 @@ section{padding:64px 22px}
   0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}
   50%   {opacity:1;transform:translateX(-50%) scale(1.08)}
 }
-#promesa > *{position:relative;z-index:1}
+/* Solo el contenido va position:relative; los decorativos (.pr-aura, .sec-aura
+   y los .corner que inyecta addCorners) DEBEN quedar absolutos para no inflar
+   la altura de la sección. */
+#promesa > .pr-cross-wrap,
+#promesa > .pr-eyebrow,
+#promesa > .pr-body,
+#promesa > .pr-signature{position:relative;z-index:1}
+#promesa > .pr-aura{position:absolute}
 
 .pr-cross-wrap{
   display:flex;align-items:center;justify-content:center;
@@ -1129,21 +1136,35 @@ section{padding:64px 22px}
 
 /* Subtitulo de agrupación — Padres / Padrinos */
 .fam-group-title{
-  font-size:10px;letter-spacing:6px;text-transform:uppercase;
-  color:var(--olive);opacity:.78;
   position:relative;z-index:3;
-  padding:6px 16px;background:var(--ink);
-  display:flex;align-items:center;gap:12px;
+  padding:6px 4px;
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;
   opacity:0;transform:translateY(8px);
   transition:opacity .7s var(--smooth), transform .7s var(--smooth);
 }
-.fam-group-title.on{opacity:.78;transform:translateY(0)}
-.fam-group-title::before,
-.fam-group-title::after{
-  content:'';width:28px;height:1px;
-  background:linear-gradient(to right,transparent,rgba(168,180,120,.5));
+.fam-group-title.on{opacity:.85;transform:translateY(0)}
+.fam-group-title .fgt-line{
+  flex:1 1 0;
+  max-width:60px;
+  height:1px;
+  background:linear-gradient(to right,transparent,rgba(74,99,62,.55));
 }
-.fam-group-title::after{background:linear-gradient(to left,transparent,rgba(168,180,120,.5))}
+.fam-group-title .fgt-line.right{background:linear-gradient(to left,transparent,rgba(74,99,62,.55))}
+.fam-group-title .fgt-diamond{
+  flex:0 0 auto;
+  color:var(--olive);
+  font-size:13px;line-height:1;
+  opacity:.92;
+  /* el line-height:1 evita que el dingbat se "corte" en algunas fuentes fallback */
+}
+.fam-group-title .fgt-text{
+  flex:0 0 auto;
+  font-size:10px;letter-spacing:6px;text-transform:uppercase;
+  color:var(--olive);
+  font-weight:700;
+  font-family:'Lato',sans-serif;
+}
 
 /* Nodo (cada pareja) */
 .fam-node{
@@ -1254,7 +1275,7 @@ section{padding:64px 22px}
 .fam-sep{
   display:flex;align-items:center;justify-content:center;gap:10px;
   position:relative;z-index:3;
-  background:var(--ink);padding:2px 14px;margin:4px 0;
+  padding:2px 14px;margin:4px 0;
   opacity:0;transform:translateY(8px);
   transition:opacity .7s, transform .7s;
 }
@@ -1396,24 +1417,44 @@ section{padding:64px 22px}
 .rsvp-greet-pases #rsvpPases{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--olive);letter-spacing:0;margin-right:6px}
 .rsvp-greet.confirmed{background:linear-gradient(180deg, rgba(74,99,62,.16), rgba(255,255,255,0));border-color:var(--olive)}
 
-/* Mensaje "Solo adultos" al pie del RSVP */
+/* Mensaje "Solo adultos" al pie del RSVP — destacado y en negritas */
 .rsvp-adults{
-  margin-top:36px;text-align:center;
-  position:relative;padding:26px 18px 4px;
+  margin:36px auto 8px;text-align:center;
+  position:relative;
+  padding:30px 22px 26px;
+  max-width:360px;
+  border:1.5px solid rgba(74,99,62,.45);
+  border-radius:14px;
+  background:linear-gradient(180deg, rgba(235,224,169,.20), rgba(255,255,255,.0));
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.7) inset,
+    0 14px 36px -18px rgba(74,99,62,.30);
 }
 .rsvp-adults-line{
-  width:44px;height:1px;margin:0 auto 20px;
+  width:54px;height:1px;margin:0 auto 18px;
   background:linear-gradient(to right,transparent,var(--olive),transparent);
 }
 .rsvp-adults-lbl{
-  font-size:9px;letter-spacing:5px;text-transform:uppercase;
-  color:var(--olive);margin-bottom:12px;
+  font-family:'Lato',sans-serif;
+  font-size:11px;letter-spacing:6px;text-transform:uppercase;
+  color:var(--olive);font-weight:700;
+  margin-bottom:14px;opacity:.95;
 }
+.rsvp-adults-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;line-height:1.05;font-weight:700;
+  letter-spacing:5px;text-transform:uppercase;
+  color:var(--olive);
+  margin:0 0 12px;
+  text-shadow:0 1px 0 rgba(255,255,255,.55);
+}
+.rsvp-adults-headline strong{font-weight:700;color:#2a3a22}
 .rsvp-adults-msg{
   font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:14px;line-height:1.8;
-  color:var(--cream);opacity:.72;
-  max-width:340px;margin:0 auto;
+  font-style:italic;font-size:16px;line-height:1.7;
+  color:#2a3a22;opacity:.86;
+  max-width:300px;margin:0 auto;
+  font-weight:500;
 }
 .fg{margin-bottom:22px}
 .flbl{display:block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--olive);margin-bottom:10px}
@@ -2452,7 +2493,13 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
   <div class="fam-grove" id="famGrove">
     <div class="fam-thread" aria-hidden="true"></div>
 
-    <p class="fam-group-title">✦ Nuestros Padres ✦</p>
+    <p class="fam-group-title">
+      <span class="fgt-line"></span>
+      <span class="fgt-diamond">✦</span>
+      <span class="fgt-text">Nuestros Padres</span>
+      <span class="fgt-diamond">✦</span>
+      <span class="fgt-line right"></span>
+    </p>
 
     <div class="fam-node">
       <div class="fam-medal">
@@ -2500,7 +2547,13 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
       <span class="fam-sep-line"></span>
     </div>
 
-    <p class="fam-group-title">✦ Nuestros Padrinos ✦</p>
+    <p class="fam-group-title">
+      <span class="fgt-line"></span>
+      <span class="fgt-diamond">✦</span>
+      <span class="fgt-text">Nuestros Padrinos</span>
+      <span class="fgt-diamond">✦</span>
+      <span class="fgt-line right"></span>
+    </p>
 
     <div class="fam-node">
       <div class="fam-medal"><div class="fam-medal-orbit"></div><span class="fam-medal-icon">❋</span></div>
@@ -2580,10 +2633,11 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
     </div>
   </form>
 
-  <!-- Mensaje: solo adultos -->
+  <!-- Mensaje: solo adultos — destacado -->
   <div class="rsvp-adults" id="rsvpAdults">
     <div class="rsvp-adults-line" aria-hidden="true"></div>
     <p class="rsvp-adults-lbl">✦  Una velada de adultos  ✦</p>
+    <h3 class="rsvp-adults-headline"><strong>No niños</strong></h3>
     <p class="rsvp-adults-msg">
       Queremos que vivas esta noche sin preocupaciones.<br>
       Con mucho cariño, te pedimos dejar a los pequeños en casa.
