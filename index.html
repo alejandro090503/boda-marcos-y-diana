@@ -900,15 +900,31 @@ section{padding:64px 22px}
   stroke-dasharray:3 7;
   animation:tlBgFlow 9s linear infinite;
 }
+/* HALO — path duplicado detrás del principal: simula glow sin SVG filter
+   (los <feGaussianBlur> matan el FPS en móvil cuando algo cambia cada frame). */
+.tl-svg-halo{
+  stroke:url(#tlGrad);
+  stroke-width:8;
+  stroke-linecap:round;
+  fill:none;
+  opacity:.32;
+}
+.tl-svg-halo-2{
+  stroke:#ebe0a9;
+  stroke-width:4;
+  stroke-linecap:round;
+  fill:none;
+  opacity:.45;
+}
 .tl-svg-path{
   stroke:url(#tlGrad);
   stroke-width:2.6;
   stroke-linecap:round;
   fill:none;
-  filter:url(#tlGlow);
+  will-change:stroke-dashoffset;
   /* OJO: NO usar stroke-dasharray/animation aquí — el JS de scroll controla
-     dashoffset para dibujar el camino. Cualquier CSS sobre estas props pelea
-     con el scroll y la línea se queda trabada en móvil. */
+     dashoffset para dibujar el camino. NO usar filter:url(#tlGlow) porque
+     <feGaussianBlur> reanima cada frame y mata el FPS en móvil. */
 }
 @keyframes tlBgFlow{
   from{stroke-dashoffset:0}
@@ -2282,8 +2298,10 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
           </feMerge>
         </filter>
       </defs>
-      <path class="tl-svg-bg"   id="tlPathBg"/>
-      <path class="tl-svg-path" id="tlPath"/>
+      <path class="tl-svg-bg"      id="tlPathBg"/>
+      <path class="tl-svg-halo"    id="tlPathHalo"/>
+      <path class="tl-svg-halo-2"  id="tlPathHalo2"/>
+      <path class="tl-svg-path"    id="tlPath"/>
     </svg>
 
     <div class="tl-row" data-side="left">
@@ -2947,11 +2965,19 @@ function buildSPath(cfg) {
     path.setAttribute('d', d);
     if (bg) bg.setAttribute('d', d);
 
+    // Sincronizar los paths halo (glow simulado) con la misma curva
+    const halo  = document.getElementById('tlPathHalo');
+    const halo2 = document.getElementById('tlPathHalo2');
+    if (halo)  halo.setAttribute('d', d);
+    if (halo2) halo2.setAttribute('d', d);
+
     const len = path.getTotalLength();
     path.style.strokeDasharray  = len;
     path.style.strokeDashoffset = len;
+    if (halo)  { halo.style.strokeDasharray  = len; halo.style.strokeDashoffset  = len; }
+    if (halo2) { halo2.style.strokeDasharray = len; halo2.style.strokeDashoffset = len; }
 
-    window[cfg.stateKey] = { path, len, rows };
+    window[cfg.stateKey] = { path, halo, halo2, len, rows, lastN: -1 };
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
 
@@ -3044,10 +3070,21 @@ function scrollAnims() {
     onUpdate(self) {
       const data = window.__tlData;
       if (!data) return;
-      const { path, len, rows } = data;
-      path.style.strokeDashoffset = len * (1 - self.progress);
+      const { path, halo, halo2, len, rows } = data;
+      // Dashoffset redondeado a 1 decimal — evita jitter subpixel y reduce
+      // reflows en móvil. Se aplica a los 3 paths (principal + halo + halo2)
+      // para que el "glow" simulado avance junto a la línea.
+      const off = Math.round(len * (1 - self.progress) * 10) / 10;
+      path.style.strokeDashoffset = off;
+      if (halo)  halo.style.strokeDashoffset  = off;
+      if (halo2) halo2.style.strokeDashoffset = off;
+
+      // Solo togglear filas si el conteo realmente cambió — evita 60 forEach/seg
       const n = Math.ceil(self.progress * rows.length);
-      rows.forEach((r, i) => r.classList.toggle('on', i < n));
+      if (n !== data.lastN) {
+        rows.forEach((r, i) => r.classList.toggle('on', i < n));
+        data.lastN = n;
+      }
     }
   });
 
