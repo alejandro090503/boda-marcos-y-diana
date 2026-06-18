@@ -532,6 +532,25 @@ section{padding:64px 22px}
   width:168px;height:168px;
   margin:0 auto 30px;
 }
+/* Fila de 2 medallas (Civil + Entrada al Salón) */
+.loc-meds-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:18px;align-items:start;
+  margin:8px auto 26px;max-width:380px;
+}
+.loc-med-block{display:flex;flex-direction:column;align-items:center;gap:10px}
+.loc-med-block .loc-medallion{
+  width:120px;height:120px;margin:0 auto 0;
+}
+.loc-med-block .loc-medallion::before{inset:-14px}
+.loc-med-block .loc-medallion::after{inset:6px}
+.loc-med-tag{
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--olive);font-weight:600;text-align:center;
+  font-family:'Lato',sans-serif;
+}
+.loc-med-block .loc-med-time{font-size:30px}
+.loc-med-block .loc-med-ampm{font-size:10px;letter-spacing:3px}
 /* Anillo exterior punteado — rotación lenta */
 .loc-medallion::before{
   content:'';position:absolute;inset:-22px;
@@ -1923,56 +1942,38 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
       </svg>
     </div>
 
-    <p class="loc-type">✦  Ceremonia Civil</p>
+    <p class="loc-type">✦  Ceremonia Civil &amp; Recepción</p>
     <h3 class="loc-name">Quinta Tres Encinos</h3>
 
-    <div class="loc-medallion">
-      <svg class="loc-med-svg" viewBox="0 0 120 120">
-        <circle class="loc-med-track" cx="60" cy="60" r="55"/>
-        <circle class="loc-med-arc"   cx="60" cy="60" r="55"/>
-      </svg>
-      <div class="loc-rotor"><span class="loc-dot"></span></div>
-      <div class="loc-med-ctr">
-        <span class="loc-med-time">6:30</span>
-        <span class="loc-med-ampm">PM</span>
+    <div class="loc-meds-row">
+      <div class="loc-med-block">
+        <p class="loc-med-tag">Ceremonia Civil</p>
+        <div class="loc-medallion">
+          <svg class="loc-med-svg" viewBox="0 0 120 120">
+            <circle class="loc-med-track" cx="60" cy="60" r="55"/>
+            <circle class="loc-med-arc"   cx="60" cy="60" r="55"/>
+          </svg>
+          <div class="loc-rotor"><span class="loc-dot"></span></div>
+          <div class="loc-med-ctr">
+            <span class="loc-med-time">6:30</span>
+            <span class="loc-med-ampm">PM</span>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <p class="loc-addr">Arteaga · Coahuila<br>México</p>
-    <a href="https://maps.app.goo.gl/5z2DmWWfu8mAs5d47"
-       target="_blank" rel="noopener" class="btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Ver en GPS / Google Maps
-    </a>
-
-    <div class="loc-wave loc-wave-bot" aria-hidden="true">
-      <svg viewBox="0 0 1600 28" preserveAspectRatio="none">
-        <path d="M0,14 Q100,24 200,14 T400,14 T600,14 T800,14 T1000,14 T1200,14 T1400,14 T1600,14" fill="none" stroke="rgba(168,180,120,.42)" stroke-width="1"/>
-        <path d="M0,8 Q100,18 200,8 T400,8 T600,8 T800,8 T1000,8 T1200,8 T1400,8 T1600,8" fill="none" stroke="rgba(168,180,120,.22)" stroke-width=".8"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="loc-card">
-    <div class="loc-wave loc-wave-top" aria-hidden="true">
-      <svg viewBox="0 0 1600 28" preserveAspectRatio="none">
-        <path d="M0,14 Q100,4 200,14 T400,14 T600,14 T800,14 T1000,14 T1200,14 T1400,14 T1600,14" fill="none" stroke="rgba(168,180,120,.42)" stroke-width="1"/>
-        <path d="M0,20 Q100,10 200,20 T400,20 T600,20 T800,20 T1000,20 T1200,20 T1400,20 T1600,20" fill="none" stroke="rgba(168,180,120,.22)" stroke-width=".8"/>
-      </svg>
-    </div>
-
-    <p class="loc-type">✦  Recepción</p>
-    <h3 class="loc-name">Quinta Tres Encinos</h3>
-
-    <div class="loc-medallion">
-      <svg class="loc-med-svg" viewBox="0 0 120 120">
-        <circle class="loc-med-track" cx="60" cy="60" r="55"/>
-        <circle class="loc-med-arc"   cx="60" cy="60" r="55"/>
-      </svg>
-      <div class="loc-rotor loc-rotor-rev"><span class="loc-dot"></span></div>
-      <div class="loc-med-ctr">
-        <span class="loc-med-time">8:00</span>
-        <span class="loc-med-ampm">PM</span>
+      <div class="loc-med-block">
+        <p class="loc-med-tag">Entrada al Salón</p>
+        <div class="loc-medallion">
+          <svg class="loc-med-svg" viewBox="0 0 120 120">
+            <circle class="loc-med-track" cx="60" cy="60" r="55"/>
+            <circle class="loc-med-arc"   cx="60" cy="60" r="55"/>
+          </svg>
+          <div class="loc-rotor loc-rotor-rev"><span class="loc-dot"></span></div>
+          <div class="loc-med-ctr">
+            <span class="loc-med-time">8:00</span>
+            <span class="loc-med-ampm">PM</span>
+          </div>
+        </div>
       </div>
     </div>
 
