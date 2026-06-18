@@ -513,16 +513,29 @@ section{padding:64px 22px}
 .cd-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--cream);opacity:.38;display:block;margin-top:5px}
 
 /* ── LOCATION ─────────────────────────────────────────── */
+/* #location — bandas horizontales tipo "claro de bosque iluminado por el sol" */
 #location{
-  background:var(--ink);
+  background:
+    linear-gradient(180deg,
+      var(--ink) 0%,
+      #fdfaee 22%,
+      #faf3d8 46%,
+      #fdfaee 72%,
+      var(--ink) 100%);
   position:relative;overflow:hidden;
 }
 #location::before{
   content:'';position:absolute;pointer-events:none;
-  top:8%;left:-40%;width:180%;height:84%;z-index:0;
+  inset:0;z-index:0;
   background:
-    radial-gradient(circle at 22% 30%, rgba(168,180,120,.045) 0%, transparent 42%),
-    radial-gradient(circle at 78% 72%, rgba(168,180,120,.035) 0%, transparent 42%);
+    radial-gradient(ellipse 60% 40% at 0% 50%, rgba(136,158,101,.16) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(136,158,101,.16) 0%, transparent 60%),
+    radial-gradient(ellipse 90% 50% at 50% 50%, rgba(235,224,169,.22) 0%, transparent 65%);
+}
+#location::after{
+  content:'';position:absolute;pointer-events:none;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right, transparent, rgba(74,99,62,.18), transparent);
 }
 #location > *{position:relative;z-index:1}
 
@@ -912,7 +925,35 @@ section{padding:64px 22px}
 .dc-note strong{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--olive);display:block;margin-bottom:6px}
 
 /* ── FAMILY · CONSTELACIÓN DE MEDALLONES ─────────────── */
-#family{background:var(--ink);overflow:hidden}
+/* #family — bloom radial central, tipo halo de unidad familiar */
+#family{
+  background:
+    radial-gradient(circle at 50% 30%, #f6efd0 0%, #fbf8e8 28%, var(--ink) 65%),
+    var(--ink);
+  overflow:hidden;position:relative;
+}
+#family::before{
+  content:'';position:absolute;pointer-events:none;
+  left:50%;top:24%;
+  width:520px;height:520px;
+  transform:translateX(-50%);
+  background:
+    conic-gradient(from 90deg at 50% 50%,
+      rgba(136,158,101,.0) 0deg,
+      rgba(136,158,101,.14) 60deg,
+      rgba(235,224,169,.22) 120deg,
+      rgba(136,158,101,.14) 180deg,
+      rgba(74,99,62,.10) 240deg,
+      rgba(235,224,169,.18) 300deg,
+      rgba(136,158,101,.0) 360deg);
+  border-radius:50%;
+  filter:blur(40px);
+  opacity:.85;
+  animation:famHalo 24s linear infinite;
+  z-index:0;
+}
+@keyframes famHalo{to{transform:translateX(-50%) rotate(360deg)}}
+#family > *{position:relative;z-index:1}
 
 .fam-grove{
   position:relative;margin-top:40px;
@@ -1147,7 +1188,28 @@ section{padding:64px 22px}
 }
 
 /* ── RSVP ─────────────────────────────────────────────── */
-#rsvp{background:var(--ink)}
+/* #rsvp — spotlight con vignette de candil */
+#rsvp{
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 35%, #fcf6e2 0%, var(--ink) 60%),
+    var(--ink);
+  position:relative;overflow:hidden;
+}
+#rsvp::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 110%, rgba(74,99,62,.20) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 40% at 50% -10%, rgba(235,224,169,.30) 0%, transparent 55%);
+}
+#rsvp::after{
+  content:'';position:absolute;pointer-events:none;z-index:0;
+  left:50%;bottom:8%;
+  width:380px;height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(to right, transparent, rgba(74,99,62,.4), transparent);
+  box-shadow:0 0 18px rgba(74,99,62,.25);
+}
+#rsvp > *{position:relative;z-index:1}
 .rsvp-sub{text-align:center;font-size:14px;color:var(--cream);opacity:.78;line-height:1.85;margin:14px 0 26px;font-weight:500}
 .rsvp-dl{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--olive);font-style:italic;font-weight:600}
 
@@ -1266,7 +1328,31 @@ section{padding:64px 22px}
 .gf-copy{margin-top:14px;width:100%;max-width:260px;margin-left:auto;margin-right:auto;font-size:10px;padding:13px 16px}
 
 /* ── ALBUM QR ─────────────────────────────────────────── */
-#album{background:var(--ink)}
+/* #album — mesh acuarela diagonal con manchas suaves */
+#album{
+  background:var(--ink);
+  position:relative;overflow:hidden;
+}
+#album::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(235,224,169,.45) 0%, transparent 35%),
+    radial-gradient(circle at 88% 22%, rgba(136,158,101,.18) 0%, transparent 38%),
+    radial-gradient(circle at 78% 78%, rgba(212,197,178,.32) 0%, transparent 40%),
+    radial-gradient(circle at 18% 82%, rgba(74,99,62,.10) 0%, transparent 42%),
+    radial-gradient(circle at 50% 50%, rgba(235,224,169,.18) 0%, transparent 55%);
+  filter:blur(2px);
+}
+#album::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(136,158,101,.0) 0px,
+      rgba(136,158,101,.0) 80px,
+      rgba(136,158,101,.04) 80px,
+      rgba(136,158,101,.04) 81px);
+}
+#album > *{position:relative;z-index:1}
 .alb-sub{text-align:center;font-size:13px;color:var(--cream);opacity:.62;line-height:1.9;margin:14px 0 28px}
 .alb-qr-wrap{text-align:center;margin-bottom:24px}
 .alb-qr-frame{
