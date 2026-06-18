@@ -718,6 +718,142 @@ section{padding:64px 22px}
   margin-bottom:12px;letter-spacing:8px;
 }
 
+/* ── PROMESA — sección editorial con cruz dorada ─────── */
+#promesa{
+  position:relative;overflow:hidden;
+  padding:88px 28px 92px;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% 0%, #fcf6e0 0%, #fdfaee 35%, var(--ink) 75%),
+    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(74,99,62,.10) 0%, transparent 60%),
+    var(--ink);
+  text-align:center;
+}
+.pr-aura{
+  position:absolute;left:50%;top:6%;
+  width:520px;height:520px;
+  transform:translateX(-50%);
+  background:radial-gradient(circle, rgba(235,224,169,.45) 0%, rgba(235,224,169,.18) 30%, transparent 65%);
+  filter:blur(28px);
+  z-index:0;pointer-events:none;
+  animation:prAuraBreath 9s ease-in-out infinite;
+}
+@keyframes prAuraBreath{
+  0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}
+  50%   {opacity:1;transform:translateX(-50%) scale(1.08)}
+}
+#promesa > *{position:relative;z-index:1}
+
+.pr-cross-wrap{
+  display:flex;align-items:center;justify-content:center;
+  gap:18px;
+  margin:0 auto 26px;
+  max-width:280px;
+}
+.pr-cross-rule{
+  flex:1;height:1px;
+  background:linear-gradient(to right, transparent, rgba(191,157,58,.55), transparent);
+}
+.pr-cross{
+  width:42px;height:64px;
+  flex:0 0 auto;
+  filter:drop-shadow(0 4px 14px rgba(191,157,58,.30));
+  animation:prCrossBreath 6s ease-in-out infinite;
+}
+@keyframes prCrossBreath{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%   {transform:translateY(-2px) scale(1.03)}
+}
+
+.pr-eyebrow{
+  font-family:'Lato',sans-serif;font-weight:700;
+  font-size:11px;letter-spacing:7px;text-transform:uppercase;
+  color:var(--olive);
+  margin:0 0 26px;
+  opacity:.92;
+}
+
+.pr-body{
+  max-width:380px;margin:0 auto;
+  padding:0 6px;
+}
+.pr-text{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:500;
+  color:var(--cream);
+  font-size:18.5px;line-height:1.78;
+  letter-spacing:.2px;
+  text-wrap:balance;
+}
+.pr-text-1{
+  font-style:italic;
+  font-size:18px;
+  color:#3a3a26;
+  position:relative;
+}
+.pr-quote{
+  font-family:'Great Vibes',cursive;font-weight:400;
+  color:var(--olive);
+  font-size:46px;line-height:0;
+  display:inline-block;
+  vertical-align:-18px;
+  opacity:.85;
+  margin:0 4px;
+}
+.pr-quote-open{margin-right:6px}
+.pr-quote-close{margin-left:6px;vertical-align:-26px}
+
+.pr-text-2{
+  font-size:17px;
+  color:#3f4a30;
+  margin-top:0;
+}
+
+.pr-sep{
+  display:flex;align-items:center;justify-content:center;
+  gap:14px;margin:26px auto 24px;
+  max-width:240px;
+}
+.pr-sep span{
+  flex:1;height:1px;
+  background:linear-gradient(to right, transparent, rgba(74,99,62,.45), transparent);
+}
+.pr-sep em{
+  font-style:normal;
+  color:var(--olive);
+  font-size:13px;letter-spacing:2px;
+  opacity:.9;
+}
+
+.pr-signature{
+  margin-top:36px;
+  font-family:'Great Vibes',cursive;
+  color:var(--olive);
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  flex-wrap:nowrap;
+  font-size:30px;line-height:1;
+}
+.pr-signature em{
+  font-style:normal;
+  font-family:'Italianno',cursive;
+  color:#bf9d3a;
+  font-size:34px;
+  opacity:.9;
+}
+.pr-signature span{
+  white-space:nowrap;
+}
+
+@media(max-width:380px){
+  .pr-text{font-size:17px}
+  .pr-text-1{font-size:16.5px}
+  .pr-signature{font-size:26px;gap:10px}
+  .pr-signature em{font-size:30px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .pr-aura,.pr-cross{animation:none!important}
+}
+
 /* ── CALENDAR ─────────────────────────────────────────── */
 #calendar{
   background:var(--ink3);padding:54px 22px;text-align:center;
@@ -1063,6 +1199,20 @@ section{padding:64px 22px}
 .fam-medal-icon svg{
   width:36px;height:36px;
   filter:drop-shadow(0 1px 2px rgba(74,99,62,.25));
+}
+
+/* Cruz QEPD junto a un nombre (papá de la novia) */
+.fam-name-cross{
+  display:inline-flex;align-items:center;gap:6px;
+  white-space:nowrap;
+}
+.qepd-cross{
+  width:11px;height:16px;
+  display:inline-block;
+  vertical-align:0;
+  margin-top:-2px;
+  filter:drop-shadow(0 1px 1.5px rgba(74,99,62,.25));
+  opacity:.92;
 }
 
 /* Rol */
@@ -1819,7 +1969,7 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 <section id="hero">
   <!-- Background photo (parallax target) -->
   <div class="h-bg" id="heroBg">
-    <img src="assets/galeria/g01.jpg"
+    <img src="assets/galeria/g05.jpg"
          alt="Diana y Luis Eduardo" loading="eager" id="heroPic">
   </div>
   <div class="h-ov"></div>
@@ -1962,6 +2112,68 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
       <path d="M0,25 Q100,5 200,25 T400,25 T600,25 T800,25" fill="none" stroke="rgba(168,180,120,.22)" stroke-width="1"/>
       <path d="M0,18 Q100,36 200,18 T400,18 T600,18 T800,18" fill="none" stroke="rgba(213,219,165,.13)" stroke-width=".8"/>
     </svg>
+  </div>
+</section>
+
+
+<!-- ═══════════════ 2.5 · NUESTRA PROMESA ═══════════════ -->
+<section id="promesa">
+  <div class="pr-aura" aria-hidden="true"></div>
+
+  <!-- Cruz elegante, slim, con gradiente dorado y delgado halo -->
+  <div class="pr-cross-wrap" aria-hidden="true">
+    <span class="pr-cross-rule"></span>
+    <svg class="pr-cross" viewBox="0 0 60 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="prCrossGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#ebe0a9"/>
+          <stop offset="42%" stop-color="#bf9d3a"/>
+          <stop offset="100%" stop-color="#4a633e"/>
+        </linearGradient>
+        <filter id="prCrossGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.6" result="b1"/>
+          <feMerge>
+            <feMergeNode in="b1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <!-- Mástil vertical (con pequeño remate decorativo arriba) -->
+      <path d="M30 6 Q29 4 30 2 Q31 4 30 6 L30 86" stroke="url(#prCrossGrad)" stroke-width="1.4" stroke-linecap="round" filter="url(#prCrossGlow)"/>
+      <!-- Travesaño horizontal -->
+      <path d="M10 28 L50 28" stroke="url(#prCrossGrad)" stroke-width="1.4" stroke-linecap="round" filter="url(#prCrossGlow)"/>
+      <!-- Detalles ornamentales en los extremos -->
+      <circle cx="30" cy="86" r="1.6" fill="#bf9d3a"/>
+      <circle cx="10" cy="28" r="1.2" fill="#bf9d3a"/>
+      <circle cx="50" cy="28" r="1.2" fill="#bf9d3a"/>
+      <!-- Pequeña joya central -->
+      <circle cx="30" cy="28" r="2.3" fill="none" stroke="url(#prCrossGrad)" stroke-width=".9"/>
+      <circle cx="30" cy="28" r=".9" fill="#ebe0a9"/>
+      <!-- Florituras inferiores muy sutiles -->
+      <path d="M22 86 Q26 90 30 86" stroke="url(#prCrossGrad)" stroke-width=".8" stroke-linecap="round" fill="none" opacity=".7"/>
+      <path d="M30 86 Q34 90 38 86" stroke="url(#prCrossGrad)" stroke-width=".8" stroke-linecap="round" fill="none" opacity=".7"/>
+    </svg>
+    <span class="pr-cross-rule"></span>
+  </div>
+
+  <p class="pr-eyebrow">Nuestra Promesa</p>
+
+  <div class="pr-body">
+    <p class="pr-text pr-text-1">
+      <span class="pr-quote pr-quote-open">“</span>Hoy, delante de Dios y de quienes amamos, hacemos la promesa de compartir un mismo camino, sostenernos mutuamente y recordar siempre que juntos somos más fuertes que por separado.<span class="pr-quote pr-quote-close">”</span>
+    </p>
+
+    <div class="pr-sep" aria-hidden="true">
+      <span></span><em>✦</em><span></span>
+    </div>
+
+    <p class="pr-text pr-text-2">
+      Deseamos de corazón que nos acompañen en este momento tan significativo, porque su presencia hará aún más especial el inicio de nuestra vida juntos.
+    </p>
+  </div>
+
+  <div class="pr-signature">
+    <span>Diana</span><em>&amp;</em><span>Luis Eduardo</span>
   </div>
 </section>
 
@@ -2143,6 +2355,29 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
       </button>
     </div>
   </div>
+
+  <div class="gf-card">
+    <div class="gf-card-top">
+      <div class="gf-logo">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <!-- caja base -->
+          <rect x="5" y="13" width="22" height="14" rx="1.2"/>
+          <!-- listón vertical -->
+          <line x1="16" y1="13" x2="16" y2="27"/>
+          <!-- listón horizontal (alrededor) -->
+          <line x1="5" y1="17" x2="27" y2="17"/>
+          <!-- moño izquierdo -->
+          <path d="M16 13 C12 9 8 9.5 7 12 C6.2 13.8 8 14 10 13.6 C12.4 13.1 14.4 13 16 13 Z" fill="currentColor" fill-opacity=".18"/>
+          <!-- moño derecho -->
+          <path d="M16 13 C20 9 24 9.5 25 12 C25.8 13.8 24 14 22 13.6 C19.6 13.1 17.6 13 16 13 Z" fill="currentColor" fill-opacity=".18"/>
+          <!-- nudo del moño -->
+          <circle cx="16" cy="12.8" r="1.4" fill="currentColor"/>
+        </svg>
+      </div>
+      <p class="gf-ttl">El día del evento</p>
+    </div>
+    <p class="gf-nt">Si lo prefieres, también puedes traer tu regalo el día de la boda · habrá un espacio especial para recibirlo.</p>
+  </div>
 </section>
 
 
@@ -2238,7 +2473,7 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
         </span>
       </div>
       <p class="fam-role">Padres de la Novia</p>
-      <p class="fam-names">Víctor Rodríguez<span class="fam-amp">&amp;</span>Yolanda Padrón</p>
+      <p class="fam-names"><span class="fam-name-cross">Víctor Rodríguez<svg class="qepd-cross" viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="En memoria"><defs><linearGradient id="crossGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ebe0a9"/><stop offset="50%" stop-color="#bf9d3a"/><stop offset="100%" stop-color="#4a633e"/></linearGradient></defs><path d="M12 2 L12 33" stroke="url(#crossGrad)" stroke-width="1.6" stroke-linecap="round"/><path d="M4 11 L20 11" stroke="url(#crossGrad)" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="11" r="1.6" fill="#bf9d3a"/><path d="M11.2 2 Q12 .5 12.8 2" stroke="url(#crossGrad)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></span><span class="fam-amp">&amp;</span>Yolanda Padrón</p>
     </div>
 
     <div class="fam-sep" aria-hidden="true">
@@ -2437,6 +2672,21 @@ function initEnvelope() {
   const openEnvelope = () => {
     if (opened) return;
     opened = true;
+
+    // Música — aprovechamos el user gesture (click/touch del sobre)
+    // para arrancar el audio. El navegador NO bloquea autoplay si es
+    // resultado directo de una interacción del usuario.
+    const aud = document.getElementById('bgMusic');
+    if (aud) {
+      const ap = aud.play();
+      if (ap && ap.then) {
+        ap.then(() => {
+          const mb = document.getElementById('musicBtn');
+          if (mb) { mb.innerHTML = '♬'; mb.classList.add('on'); }
+          window.__musicAutoPlaying = true;
+        }).catch(() => { /* fallback: el invitado puede usar el botón */ });
+      }
+    }
 
     gsap.to(hint, { opacity: 0, duration: .35, ease: 'power2.out' });
 
@@ -2758,6 +3008,21 @@ function scrollAnims() {
     }
   });
 
+  // Promesa — entrada editorial suave en cascada
+  const prSec = document.getElementById('promesa');
+  if (prSec) {
+    gsap.fromTo(['#promesa .pr-cross-wrap', '#promesa .pr-eyebrow', '#promesa .pr-text-1', '#promesa .pr-sep', '#promesa .pr-text-2', '#promesa .pr-signature'],
+      { opacity: 0, y: 22 },
+      {
+        opacity: 1, y: 0,
+        duration: .85, stagger: .16,
+        ease: 'power3.out',
+        immediateRender: false,
+        scrollTrigger: { trigger: '#promesa', start: 'top 80%', once: true }
+      }
+    );
+  }
+
   // Calendar button — fade in suave (sin desaparecerlo si el trigger no dispara)
   gsap.fromTo(['#calendar .cal-sub', '#calBtn'],
     { opacity: 0, y: 18 },
@@ -2896,12 +3161,20 @@ function countdown() {
 /* ── MUSIC ───────────────────────────────────────────── */
 const aud = document.getElementById('bgMusic');
 const mBtn = document.getElementById('musicBtn');
-let playing = false;
 
 function toggleMusic() {
-  if (playing) { aud.pause(); mBtn.innerHTML='♪'; mBtn.classList.remove('on'); }
-  else { aud.play().catch(()=>{}); mBtn.innerHTML='♬'; mBtn.classList.add('on'); }
-  playing = !playing;
+  // Usamos aud.paused como fuente de verdad — así sincroniza correctamente
+  // con el autoplay que arrancó al abrir el sobre.
+  if (!aud) return;
+  if (!aud.paused) {
+    aud.pause();
+    mBtn.innerHTML = '♪';
+    mBtn.classList.remove('on');
+  } else {
+    aud.play().catch(() => {});
+    mBtn.innerHTML = '♬';
+    mBtn.classList.add('on');
+  }
 }
 
 /* ── RSVP · PANEL DE INVITADOS ───────────────────────── */
