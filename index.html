@@ -203,22 +203,101 @@ section{padding:64px 22px}
 }
 
 /* ── MUSIC BTN ────────────────────────────────────────── */
-.music-btn{
-  position:fixed;bottom:22px;right:22px;width:46px;height:46px;
-  border-radius:50%;background:rgba(255,255,255,.85);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1px solid rgba(125,138,86,.4);color:var(--olive);font-size:18px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;z-index:999;
-  box-shadow:0 4px 24px rgba(0,0,0,.45);
-  transition:all .3s var(--spring);
+/* ── VINYL MUSIC PLAYER ─────────────────────────────── */
+.vinyl-btn{
+  position:fixed;bottom:20px;right:20px;z-index:999;
+  width:72px;height:72px;border-radius:50%;padding:0;
+  border:none;cursor:pointer;background:transparent;
+  opacity:0;transform:scale(.6);pointer-events:none;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .35s;
+  box-shadow:0 4px 18px rgba(0,0,0,.45),0 0 0 1px rgba(168,180,120,.18);
 }
-.music-btn:active{transform:scale(.88)}
-.music-btn.on{border-color:var(--olive);background:rgba(168,180,120,.14);
-  animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(168,180,120,.35),0 4px 24px rgba(0,0,0,.45)}
-  50%{box-shadow:0 0 0 9px rgba(168,180,120,0),0 4px 24px rgba(0,0,0,.45)}
+.vinyl-btn.is-ready{opacity:1;transform:scale(1);pointer-events:auto}
+.vinyl-btn:hover{transform:scale(1.1)}
+.vinyl-spin{width:100%;height:100%;border-radius:50%;position:relative;transition:none}
+.vinyl-btn.is-playing .vinyl-spin{animation:vinylSpin 1.8s linear infinite}
+@keyframes vinylSpin{to{transform:rotate(360deg)}}
+.vinyl-disc{width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative;
+  background:
+    radial-gradient(circle,#1a2e0d 4%,transparent 4.5%),
+    radial-gradient(circle,#ebe0a9 0%,#889e65 17%,#4a633e 19%,transparent 19.5%),
+    repeating-radial-gradient(circle,
+      transparent 20%,rgba(255,255,255,.055) 20.8%,transparent 21.5%,
+      transparent 24%,rgba(255,255,255,.04) 24.8%,transparent 25.5%,
+      transparent 28%,rgba(255,255,255,.055) 28.8%,transparent 29.5%,
+      transparent 32%,rgba(255,255,255,.04) 32.8%,transparent 33.5%,
+      transparent 36%,rgba(255,255,255,.055) 36.8%,transparent 37.5%,
+      transparent 40%,rgba(255,255,255,.04) 40.8%,transparent 41.5%,
+      transparent 44%,rgba(255,255,255,.055) 44.8%,transparent 45.5%,
+      transparent 48%,rgba(255,255,255,.04) 48.8%,transparent 49.5%,
+      transparent 52%,rgba(255,255,255,.055) 52.8%,transparent 53.5%,
+      transparent 56%,rgba(255,255,255,.04) 56.8%,transparent 57.5%,
+      transparent 60%,rgba(255,255,255,.055) 60.8%,transparent 61.5%,
+      transparent 64%,rgba(255,255,255,.04) 64.8%,transparent 65.5%,
+      transparent 68%,rgba(255,255,255,.055) 68.8%,transparent 69.5%,
+      transparent 72%,rgba(255,255,255,.04) 72.8%,transparent 73.5%,
+      transparent 76%,rgba(255,255,255,.055) 76.8%,transparent 77.5%,
+      transparent 80%,rgba(255,255,255,.04) 80.8%,transparent 81.5%,
+      transparent 84%,rgba(255,255,255,.055) 84.8%,transparent 85.5%,
+      transparent 88%,rgba(255,255,255,.04) 88.8%,transparent 89.5%,
+      transparent 92%,rgba(255,255,255,.055) 92.8%,transparent 93.5%,
+      transparent 96%,rgba(255,255,255,.04) 96.8%,transparent 97.5%
+    ),
+    radial-gradient(circle,#1a2e0d 0%,#243d1b 60%,#1a2e0d 100%);
+  box-shadow:inset 0 0 8px rgba(0,0,0,.4);
+}
+.vinyl-sheen{
+  position:absolute;inset:0;border-radius:50%;
+  background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.09) 42%,rgba(255,255,255,.15) 48%,rgba(255,255,255,.09) 54%,transparent 66%);
+  pointer-events:none;
+}
+.vinyl-label-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Great Vibes',cursive;font-size:11px;color:#ebe0a9;
+  text-align:center;line-height:1.1;opacity:.85;
+  pointer-events:none;width:28px;
+}
+.vinyl-label-text small{font-family:'Lato',sans-serif;font-size:5px;letter-spacing:.15em;display:block;margin-top:1px;opacity:.6}
+.vinyl-hole{
+  position:absolute;top:50%;left:50%;width:6px;height:6px;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:#1a2e0d;
+  box-shadow:0 0 0 1.5px rgba(235,224,169,.4);
+}
+.vinyl-icons{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:18px;height:18px;pointer-events:none;z-index:2;
+}
+.vinyl-icons svg{width:100%;height:100%;display:block}
+.vinyl-icon-pause{display:none}
+.vinyl-btn.is-playing .vinyl-icon-play{display:none}
+.vinyl-btn.is-playing .vinyl-icon-pause{display:block}
+.vinyl-btn::after{
+  content:"";position:absolute;inset:-5px;border-radius:50%;
+  border:1px solid #ebe0a9;opacity:.3;
+  animation:vinylPulse 3s ease-in-out infinite;
+}
+.vinyl-btn.is-playing::after{animation-duration:1.6s}
+@keyframes vinylPulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.12);opacity:.05}}
+.vinyl-tonearm{
+  position:absolute;top:-4px;right:-2px;width:24px;height:34px;
+  transform-origin:top right;transform:rotate(-28deg);
+  transition:transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none;z-index:1;
+}
+.vinyl-btn.is-playing .vinyl-tonearm{transform:rotate(-12deg)}
+.vinyl-tonearm-line{
+  position:absolute;top:2px;right:4px;width:2px;height:28px;
+  background:linear-gradient(to bottom,#889e65,#ebe0a9 40%,#889e65);
+  border-radius:1px;transform:rotate(-5deg);transform-origin:top center;
+}
+.vinyl-tonearm-head{
+  position:absolute;bottom:0;right:2px;width:5px;height:6px;
+  background:#ebe0a9;border-radius:0 0 2px 2px;
+}
+.vinyl-tonearm-pivot{
+  position:absolute;top:0;right:2px;width:7px;height:7px;
+  background:radial-gradient(circle,#ebe0a9,#889e65);border-radius:50%;
+  box-shadow:0 1px 3px rgba(0,0,0,.3);
 }
 
 /* ── TOAST ────────────────────────────────────────────── */
@@ -1416,6 +1495,12 @@ section{padding:64px 22px}
 .rsvp-greet-pases{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--olive);font-weight:600}
 .rsvp-greet-pases #rsvpPases{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--olive);letter-spacing:0;margin-right:6px}
 .rsvp-greet.confirmed{background:linear-gradient(180deg, rgba(74,99,62,.16), rgba(255,255,255,0));border-color:var(--olive)}
+.rsvp-fields{display:flex;flex-direction:column;gap:10px;max-width:420px;margin:0 auto 18px}
+.rsvp-input{width:100%;padding:14px 18px;border:1.5px solid rgba(74,99,62,.32);border-radius:8px;background:rgba(255,255,255,.85);font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--cream);outline:none;transition:border-color .3s;-webkit-appearance:none;min-height:48px}
+.rsvp-input:focus{border-color:var(--olive)}
+.rsvp-input::placeholder{color:rgba(245,237,213,.5);font-style:italic}
+.btn-olive:disabled{opacity:.55;cursor:not-allowed}
+#rsvp-feedback{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;font-weight:600;text-align:center;margin:14px auto 0;max-width:420px;line-height:1.5;min-height:18px;color:var(--olive)}
 
 /* Mensaje "Solo adultos" al pie del RSVP — destacado y en negritas */
 .rsvp-adults{
@@ -1783,15 +1868,15 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 }
 .sec-aura.on{opacity:1}
 
-/* ── MUSIC BTN SPRING ─────────────────────────────────── */
-.music-btn{transition:all .35s cubic-bezier(.34,1.56,.64,1)!important}
-.music-btn:hover{transform:scale(1.18)!important;border-color:var(--olive)!important}
+/* ── VINYL BTN SPRING ─────────────────────────────────── */
+.vinyl-btn{transition:transform .35s cubic-bezier(.34,1.56,.64,1)!important}
+.vinyl-btn:hover{transform:scale(1.18)!important}
 
 /* ── REDUCED MOTION ───────────────────────────────────── */
 @media(prefers-reduced-motion:reduce){
   .lbl,.ft-nms,.wind-orn,.h-frame,.gline::after,
   .loc-card,.cd-box,.fam-card,.gf-card,.pal-sw,
-  .kp-card,.alb-qr-frame,.music-btn,
+  .kp-card,.alb-qr-frame,.vinyl-btn,
   .loc-wave svg,.loc-medallion::before,.loc-medallion::after,
   .loc-rotor,.loc-med-arc{
     animation:none!important;transition:none!important;
@@ -2016,7 +2101,24 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 </audio>
 
 <!-- MUSIC BTN -->
-<button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Música">♪</button>
+<button class="vinyl-btn" id="musicBtn" type="button" aria-label="Reproducir música de la invitación">
+  <div class="vinyl-tonearm">
+    <div class="vinyl-tonearm-pivot"></div>
+    <div class="vinyl-tonearm-line"></div>
+    <div class="vinyl-tonearm-head"></div>
+  </div>
+  <div class="vinyl-spin">
+    <div class="vinyl-disc">
+      <div class="vinyl-sheen"></div>
+      <div class="vinyl-label-text">D&amp;L<small>2026</small></div>
+      <div class="vinyl-hole"></div>
+    </div>
+  </div>
+  <div class="vinyl-icons">
+    <svg class="vinyl-icon-play" viewBox="0 0 24 24" fill="#ebe0a9" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="vinyl-icon-pause" viewBox="0 0 24 24" fill="#ebe0a9" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+  </div>
+</button>
 
 <!-- TOAST -->
 <div id="toast"></div>
@@ -2469,7 +2571,7 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
   <span class="lbl">Vestimenta</span>
   <h2 class="ttl">Código de Vestimenta</h2>
   <div class="gline"></div>
-  <p class="dc-sub"><em style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500">Formal</em><br>Ayúdanos a crear un ambiente especial<br>vistiéndote con nuestra paleta de colores.</p>
+  <p class="dc-sub"><em style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500">Formal</em><br>Ayúdanos a crear un ambiente especial.<br><span style="font-size:13px;opacity:.78;line-height:1.6">Los colores son una sugerencia pensada con cariño&nbsp;&mdash;<br>puedes inspirarte en ellos, <em>no es un requisito</em>.</span></p>
   <div class="palette" id="palette">
     <div class="pal-item"><div class="pal-sw" style="background:#D4C5B2"></div><p class="pal-nm">Taupe</p></div>
     <div class="pal-item"><div class="pal-sw" style="background:#ebe0a9"></div><p class="pal-nm">Crema</p></div>
@@ -2625,12 +2727,16 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
         </div>
       </div>
     </div>
+    <div class="fg" id="fgNames">
+      <div class="rsvp-fields" id="rsvp-fields" style="display:none"></div>
+    </div>
     <div class="fg" id="fg4">
       <button type="submit" class="btn btn-olive" id="rsvpBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-        Confirmar asistencia
+        <span id="rsvp-btn-text">Confirmar asistencia</span>
       </button>
     </div>
+    <p id="rsvp-feedback"></p>
   </form>
 
   <!-- Mensaje: solo adultos — destacado -->
@@ -2754,7 +2860,7 @@ function initEnvelope() {
       if (ap && ap.then) {
         ap.then(() => {
           const mb = document.getElementById('musicBtn');
-          if (mb) { mb.innerHTML = '♬'; mb.classList.add('on'); }
+          if (mb) { mb.classList.add('is-playing'); }
           window.__musicAutoPlaying = true;
         }).catch(() => { /* fallback: el invitado puede usar el botón */ });
       }
@@ -3249,69 +3355,218 @@ function countdown() {
   }
 }
 
-/* ── MUSIC ───────────────────────────────────────────── */
-const aud = document.getElementById('bgMusic');
+/* ── VINYL MUSIC PLAYER ─────────────────────────────── */
+const aud  = document.getElementById('bgMusic');
 const mBtn = document.getElementById('musicBtn');
 
-function toggleMusic() {
-  // Usamos aud.paused como fuente de verdad — así sincroniza correctamente
-  // con el autoplay que arrancó al abrir el sobre.
-  if (!aud) return;
-  if (!aud.paused) {
-    aud.pause();
-    mBtn.innerHTML = '♪';
-    mBtn.classList.remove('on');
+// Sincronizar clases vinilo con eventos del audio
+if (aud) {
+  aud.addEventListener('play',  () => mBtn && mBtn.classList.add('is-playing'));
+  aud.addEventListener('pause', () => mBtn && mBtn.classList.remove('is-playing'));
+}
+
+// Mostrar botón al cargar la página
+if (mBtn) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => mBtn.classList.add('is-ready'));
   } else {
-    aud.play().catch(() => {});
-    mBtn.innerHTML = '♬';
-    mBtn.classList.add('on');
+    mBtn.classList.add('is-ready');
   }
 }
 
-/* ── RSVP · PANEL DE INVITADOS ───────────────────────── */
-const PANEL_SLUG = 'boda-marcos-y-diana';
-const PANEL_API  = 'https://panel-invitados.vercel.app/api/confirmar';
+// Click en el vinilo — toggle play/pause
+if (mBtn) {
+  mBtn.addEventListener('click', () => {
+    if (!aud) return;
+    if (aud.paused) {
+      aud.play().catch(() => {});
+    } else {
+      aud.pause();
+    }
+  });
+}
 
-const _urlParams = new URLSearchParams(window.location.search);
-const PARA  = (_urlParams.get('para') || '').trim();
-const PASES = parseInt(_urlParams.get('pases') || '0', 10) || 0;
+/* ── RSVP · PANEL DE INVITADOS (guard silencioso + caché de nombres) ── */
+const PANEL_API = 'https://panel-invitados.vercel.app/api/confirmar';
+const RSVP_URL  = 'https://boda-marcos-y-diana.vercel.app';
+const DEADLINE  = new Date(2026, 6, 11, 23, 59, 59, 999);
 
-(function paintGreet(){
-  const nameEl  = document.getElementById('rsvpName');
-  const pasesEl = document.getElementById('rsvpPases');
-  const pasesLbl= document.getElementById('rsvpPasesLbl');
-  if (PARA  && nameEl)  nameEl.textContent  = PARA;
-  if (PASES && pasesEl) pasesEl.textContent = PASES;
-  if (pasesLbl) pasesLbl.textContent = PASES === 1 ? 'pase reservado' : 'pases reservados';
+(function initRsvpPanel(){
+  const frozen   = Date.now() > DEADLINE.getTime();
+  const params   = new URLSearchParams(window.location.search);
+  const urlPara  = (params.get('para') || '').trim();
+  const rawP     = parseInt(params.get('pases') || '1', 10);
+  let pasesAsignados = (isNaN(rawP) || rawP < 1 || rawP > 20) ? 1 : rawP;
+
+  let savedNames = [];
+  const nameEl   = document.getElementById('rsvpName');
+  const pasesEl  = document.getElementById('rsvpPases');
+  const pasesLbl = document.getElementById('rsvpPasesLbl');
+  const greet    = document.getElementById('rsvpGreet');
+  const fieldsEl = document.getElementById('rsvp-fields');
+  const rYes     = document.getElementById('rYes');
+  const rNo      = document.getElementById('rNo');
+  const btn      = document.getElementById('rsvpBtn');
+  const btnText  = document.getElementById('rsvp-btn-text');
+  const feedEl   = document.getElementById('rsvp-feedback');
+
+  function actualizarBadge(){
+    if (pasesEl)  pasesEl.textContent = pasesAsignados;
+    if (pasesLbl) pasesLbl.textContent = pasesAsignados === 1 ? 'pase reservado' : 'pases reservados';
+  }
+
+  if (urlPara && nameEl) nameEl.textContent = urlPara;
+  if (urlPara) {
+    // Guard silencioso: bloqueamos hasta saber pases reales
+    if (pasesEl) pasesEl.textContent = '…';
+    if (rYes) rYes.disabled = true;
+    if (rNo)  rNo.disabled  = true;
+    if (btn)  btn.disabled  = true;
+  } else {
+    actualizarBadge();
+  }
+
+  function renderFields(n){
+    fieldsEl.innerHTML = '';
+    for (let i = 0; i < n; i++) {
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.className = 'rsvp-input';
+      inp.placeholder = n === 1 ? 'Tu nombre completo' : 'Invitado ' + (i + 1);
+      inp.autocomplete = 'off';
+      inp.maxLength = 60;
+      inp.value = savedNames[i] || '';
+      ((idx) => inp.addEventListener('input', function(){ savedNames[idx] = this.value; }))(i);
+      fieldsEl.appendChild(inp);
+    }
+  }
+
+  function showFields(yes){
+    if (yes) {
+      renderFields(pasesAsignados);
+      fieldsEl.style.display = 'flex';
+    } else {
+      fieldsEl.style.display = 'none';
+      fieldsEl.innerHTML = '';
+    }
+  }
+
+  if (rYes) rYes.addEventListener('change', () => { if (rYes.checked) showFields(true); });
+  if (rNo)  rNo.addEventListener('change',  () => { if (rNo.checked)  showFields(false); });
+
+  if (urlPara) {
+    fetch(PANEL_API + '?nombre=' + encodeURIComponent(urlPara) + '&url_boda=' + encodeURIComponent(RSVP_URL))
+      .then(r => r.json())
+      .then(resp => {
+        const d = resp.invitado;
+        if (d && typeof d.pases === 'number' && d.pases > 0 && d.pases <= 20) {
+          pasesAsignados = d.pases;
+        }
+        actualizarBadge();
+        if (rYes) rYes.disabled = false;
+        if (rNo)  rNo.disabled  = false;
+        if (btn)  btn.disabled  = false;
+        if (d && (d.estado === 'confirmado' || d.estado === 'declino')) {
+          if (d.nombres_confirmados && d.nombres_confirmados.length) {
+            savedNames = d.nombres_confirmados.slice();
+          }
+          const isYes = d.estado === 'confirmado';
+          if (rYes) rYes.checked = isYes;
+          if (rNo)  rNo.checked  = !isYes;
+          showFields(isYes);
+          if (btnText) btnText.textContent = 'Actualizar respuesta';
+          if (feedEl)  feedEl.textContent = isYes
+            ? '¡Ya tienes confirmada tu asistencia! Puedes actualizar tu respuesta.'
+            : 'Ya tienes registrado que no podrás asistir. Puedes cambiar tu respuesta.';
+        } else {
+          // Por defecto el radio "Asistiré" viene checked → mostramos campos
+          if (rYes && rYes.checked) showFields(true);
+        }
+      })
+      .catch(() => {
+        actualizarBadge();
+        if (rYes) rYes.disabled = false;
+        if (rNo)  rNo.disabled  = false;
+        if (btn)  btn.disabled  = false;
+        if (rYes && rYes.checked) showFields(true);
+      });
+  } else {
+    if (rYes && rYes.checked) showFields(true);
+  }
+
+  if (frozen) {
+    if (rYes) rYes.disabled = true;
+    if (rNo)  rNo.disabled  = true;
+    if (btn)  btn.disabled  = true;
+    if (btnText) btnText.textContent = 'Fecha límite alcanzada';
+    if (feedEl)  feedEl.textContent = 'La fecha para confirmar asistencia ha pasado.';
+  }
 })();
 
 function submitRSVP(e) {
   e.preventDefault();
-  const att = document.querySelector('input[name="att"]:checked');
-  if (!att) { toast('Indica si asistirás'); return; }
+  if (Date.now() > DEADLINE.getTime()) return;
 
-  const btn = document.getElementById('rsvpBtn');
-  if (btn) { btn.disabled = true; btn.style.opacity = .65; }
+  const params  = new URLSearchParams(window.location.search);
+  const urlPara = (params.get('para') || '').trim();
+  const att     = document.querySelector('input[name="att"]:checked');
+  const btn     = document.getElementById('rsvpBtn');
+  const btnText = document.getElementById('rsvp-btn-text');
+  const feedEl  = document.getElementById('rsvp-feedback');
+  const fieldsEl= document.getElementById('rsvp-fields');
 
-  const payload = {
-    slug: PANEL_SLUG,
-    invitado: PARA || 'Invitado',
-    pases: PASES,
-    asiste: att.value === 'yes',
-  };
+  if (!att) {
+    feedEl.style.color = '#9a4a3a';
+    feedEl.textContent = 'Por favor selecciona si asistirás o no.';
+    return;
+  }
+  const isYes = att.value === 'yes';
+  let nombres = [];
+  if (isYes) {
+    const inputs = fieldsEl.querySelectorAll('.rsvp-input');
+    for (let i = 0; i < inputs.length; i++) {
+      const v = inputs[i].value.trim();
+      if (v) nombres.push(v);
+    }
+    if (nombres.length === 0) {
+      feedEl.style.color = '#9a4a3a';
+      feedEl.textContent = 'Por favor escribe al menos un nombre.';
+      return;
+    }
+  }
+
+  btn.disabled = true;
+  if (btnText) btnText.textContent = 'Enviando…';
+  feedEl.textContent = ''; feedEl.style.color = '';
 
   fetch(PANEL_API, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-    mode: 'cors',
+    body: JSON.stringify({
+      nombre: urlPara || 'Invitado',
+      url_boda: RSVP_URL,
+      estado: isYes ? 'confirmado' : 'declino',
+      pases_confirmados: isYes ? nombres.length : 0,
+      nombres_confirmados: nombres
+    })
   })
-    .catch(() => {})
-    .finally(() => {
-      const greet = document.getElementById('rsvpGreet');
-      if (greet) greet.classList.add('confirmed');
-      toast(att.value === 'yes' ? '¡Gracias por confirmar! 💕' : 'Confirmación recibida 💌');
-    });
+  .then(r => r.json())
+  .then(() => {
+    btn.disabled = false;
+    if (btnText) btnText.textContent = 'Actualizar respuesta';
+    const greet = document.getElementById('rsvpGreet');
+    if (greet) greet.classList.add('confirmed');
+    feedEl.style.color = '';
+    feedEl.textContent = isYes
+      ? '¡Tu asistencia ha sido confirmada! Nos vemos pronto.'
+      : 'Hemos registrado que no podrás asistir. ¡Gracias por avisarnos!';
+  })
+  .catch(() => {
+    btn.disabled = false;
+    if (btnText) btnText.textContent = 'Confirmar asistencia';
+    feedEl.style.color = '#9a4a3a';
+    feedEl.textContent = 'Error de conexión. Intenta de nuevo.';
+  });
 }
 
 /* ── COPY CLABE ──────────────────────────────────────── */
